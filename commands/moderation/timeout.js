@@ -1,3 +1,4 @@
+const { error } = require('console');
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
 module.exports = {
@@ -29,6 +30,10 @@ module.exports = {
 
         if (!member) {
             return interaction.reply({ content: "The user doesn't exist in this server", ephemeral: true });
+        }
+
+        if (duration > 10080) {
+            return interaction.reply({ content: "The maxinum is 10.080 minutes!", ephemeral: true })
         }
 
         const timeoutDuration = duration * 60 * 1000; 
