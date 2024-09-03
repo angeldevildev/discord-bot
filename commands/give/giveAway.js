@@ -20,7 +20,6 @@ module.exports = {
             return interaction.reply({ content: 'You do not have permission to manage roles.', ephemeral: true });
         }
 
-        // Crea il bottone "Join Giveaway!"
         const joinButton = new ButtonBuilder()
             .setCustomId('join_giveaway')
             .setLabel('Join Giveaway!')
@@ -30,17 +29,14 @@ module.exports = {
 
         let participants = [];
 
-        // Crea l'embed del giveaway
         let embed = new EmbedBuilder()
             .setTitle('🎉 Giveaway!')
             .setDescription(`Join the giveaway to win the **${role.name}** role!\nYou have **${duration} minutes** to join.\n\n**Participants:**\nNone yet.`)
             .setColor('Aqua')
             .setTimestamp();
 
-        // Messaggio di risposta con l'embed e il bottone
         const message = await interaction.reply({ embeds: [embed], components: [actionRow], fetchReply: true });
 
-        // Colleziona le interazioni con il bottone
         const filter = i => i.customId === 'join_giveaway' && !i.user.bot;
         const collector = message.createMessageComponentCollector({ filter, time: duration * 60 * 1000 });
 
@@ -48,7 +44,6 @@ module.exports = {
             if (!participants.includes(i.user.id)) {
                 participants.push(i.user.id);
 
-                // Aggiorna l'embed con la lista dei partecipanti
                 embed.setDescription(`Join the giveaway to win the **${role.name}** role!\nYou have **${duration} minutes** to join.\n\n**Participants:**\n${participants.map(id => `<@${id}>`).join('\n')}`);
                 
                 await message.edit({ embeds: [embed] });
@@ -63,15 +58,12 @@ module.exports = {
                 return interaction.followUp({ content: 'No one joined the giveaway, so there is no winner!', ephemeral: true });
             }
 
-            // Estrai un vincitore casuale
             const winnerId = participants[Math.floor(Math.random() * participants.length)];
             const winner = await interaction.guild.members.fetch(winnerId);
 
             try {
-                // Assegna il ruolo al vincitore
                 await winner.roles.add(role);
-
-                // Crea un embed per annunciare il vincitore
+                
                 const winnerEmbed = new EmbedBuilder()
                     .setTitle('🎉 We have a winner!')
                     .setDescription(`Congratulations to **${winner.user.tag}** who has won the **${role.name}** role!`)
