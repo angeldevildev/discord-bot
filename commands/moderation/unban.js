@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -22,10 +22,21 @@ module.exports = {
 
         try {
             await interaction.guild.members.unban(userId, reason);
-            interaction.reply({ content: `The user with ID ${userId} has been unbanned. Reason: ${reason}` });
+
+            const embed = new EmbedBuilder()
+                .setColor("Green")
+                .setTitle('User Unbanned')
+                .setDescription(`**User ID:** ${userId}\n**Reason:** ${reason}`)
+                .addFields(
+                    { name: 'Moderator', value: `${interaction.user.tag}`, inline: true }
+                )
+                .setTimestamp();
+
+            await interaction.reply({ embeds: [embed] });
+
         } catch (error) {
             console.error(error);
-            interaction.reply({ content: 'I was unable to ban the user. Please check that the ID is correct and that the user is indeed banned.', ephemeral: true });
+            interaction.reply({ content: 'I was unable to unban the user. Please check that the ID is correct and that the user is indeed banned.', ephemeral: true });
         }
     },
 };

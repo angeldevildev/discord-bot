@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -10,7 +10,7 @@ module.exports = {
                 .setRequired(true))
         .addStringOption(option => 
             option.setName('reason')
-                .setDescription('The reason of the kick')
+                .setDescription('The reason for the kick')
                 .setRequired(false)),
     async execute(interaction) {
         if (!interaction.member.permissions.has('KICK_MEMBERS')) {
@@ -28,10 +28,23 @@ module.exports = {
 
         try {
             await member.kick(reason);
-            interaction.reply({ content: `${user.tag} has been kicked. Reason: ${reason}` });
+
+            const embed = new EmbedBuilder()
+                .setColor("Red")
+                .setTitle('User Kicked')
+                .setDescription(`**${user.tag}** has been kicked from the server.`)
+                .addFields(
+                    { name: 'User', value: `${user.tag}`, inline: true },
+                    { name: 'Moderator', value: `${interaction.user.tag}`, inline: true },
+                    { name: 'Reason', value: reason }
+                )
+                .setTimestamp();
+
+            await interaction.reply({ embeds: [embed] });
+
         } catch (error) {
             console.error(error);
-            interaction.reply({ content: 'I was unable to eject the user. I may not have enough permissions or the user has a higher role.', ephemeral: true });
+            interaction.reply({ content: 'I was unable to kick the user. I may not have enough permissions or the user has a higher role.', ephemeral: true });
         }
     },
 };

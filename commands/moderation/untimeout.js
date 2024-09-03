@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -28,7 +28,20 @@ module.exports = {
 
         try {
             await member.timeout(null, reason);  
-            interaction.reply({ content: `The timeout of ${user.tag} has been removed. Reason: ${reason}` });
+
+            const embed = new EmbedBuilder()
+                .setColor("DarkBlue")
+                .setTitle('Timeout Removed')
+                .setDescription(`**${user.tag}** has been untimeouted.`)
+                .addFields(
+                    { name: 'User', value: `${user.tag}`, inline: true },
+                    { name: 'Moderator', value: `${interaction.user.tag}`, inline: true },
+                    { name: 'Reason', value: reason }
+                )
+                .setTimestamp();
+
+            await interaction.reply({ embeds: [embed] });
+
         } catch (error) {
             console.error(error);
             interaction.reply({ content: 'I could not remove the user timeout. I may not have enough permissions or the user has a higher role.', ephemeral: true });
