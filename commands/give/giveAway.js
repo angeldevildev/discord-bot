@@ -70,11 +70,7 @@ module.exports = {
                     .setColor('Gold')
                     .setTimestamp();
 
-                const message = await interaction.followUp({ embeds: [winnerEmbed] });
-
-                setTimeout(() => {
-                    message.delete().catch(console.error);
-                }, 30000);
+                await interaction.followUp({ embeds: [winnerEmbed] });
 
             } catch (error) {
                 console.error(error);

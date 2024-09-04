@@ -1,7 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageAttachment } = require('discord.js');
 
-// Array di link delle immagini
 const imageLinks = [
     'https://static.timesofisrael.com/www/uploads/2016/09/pepenazi.jpg',
     'https://storage.googleapis.com/pod_public/750/175426.jpg',
