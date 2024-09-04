@@ -25,6 +25,10 @@ module.exports = {
             .setTimestamp() 
             .setFooter({ text: 'Ping command', iconURL: interaction.client.user.displayAvatarURL() });
 
-        interaction.editReply({ content: null, embeds: [embed] });
+        const message = interaction.editReply({ content: null, embeds: [embed] });
+        
+        setTimeout(() => {
+            message.delete().catch(console.error);
+        }, 30000);
     },
 };

@@ -46,7 +46,12 @@ module.exports = {
                 .setFooter({ text: `Deleted by ${interaction.user.tag}` })
                 .setTimestamp();
 
-            interaction.reply({ embeds: [embed], ephemeral: true });
+            const message = interaction.reply({ embeds: [embed], ephemeral: true });
+
+            setTimeout(() => {
+                message.delete().catch(console.error);
+            }, 30000);
+            
         } catch (error) {
             console.error(error);
             interaction.reply({ content: 'An error occurred while trying to delete messages. Ensure messages are not older than 14 days.', ephemeral: true });

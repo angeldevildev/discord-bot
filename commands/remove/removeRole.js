@@ -43,7 +43,12 @@ module.exports = {
                 )
                 .setTimestamp();
 
-            interaction.reply({ embeds: [embed] });
+            const message = interaction.reply({ embeds: [embed] });
+
+            setTimeout(() => {
+                message.delete().catch(console.error);
+            }, 30000);
+            
         } catch (error) {
             console.error(error);
             interaction.reply({ content: 'I was unable to remove the role. I may not have enough permissions or the role is higher than my role.', ephemeral: true });
