@@ -13,7 +13,12 @@ const imageLinks = [
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2SBwmZpenT1e16fj-QVf4SiHdfENUEY1s5w&s',
     'https://i.pinimg.com/236x/7c/3a/70/7c3a701c1f86936a70a450f68c3e75c4.jpg',
     'https://the-decoder.com/wp-content/uploads/2023/11/pepe_frog_meme_dall_e.png',
-    'https://i.seadn.io/gae/BY5fxKF82o6Uwg8ZjpBDfvvEIvEKJCY-YWydkKCE4SqakluW88qxPRkas9IzLZoCmWE1YS8iwcmQAd-NZLBnGMqifOCBNYDjHvqHjw8?auto=format&dpr=1&w=1000'
+    'https://i.seadn.io/gae/BY5fxKF82o6Uwg8ZjpBDfvvEIvEKJCY-YWydkKCE4SqakluW88qxPRkas9IzLZoCmWE1YS8iwcmQAd-NZLBnGMqifOCBNYDjHvqHjw8?auto=format&dpr=1&w=1000',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtRPOSKzMMYGgPmjGDH6dZU5bWcWF7RLkfhw&s',
+    'https://akm-img-a-in.tosshub.com/indiatoday/images/story/202404/pepe-the-frog-18184698-3x4.jpeg?VersionId=J_njfwJEkhgF1Ll.c0tDY8GpF8A3_KSj',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStDktGybUrlcwk8dBao2loyCoPI9sOtFteNA&s',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2_jtk42Qh_nhPua-Atum80W0w_d3eB_mDZ0zR-eMEkzVkS253C3u5tLosgDGuM_Es2Yc',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4G-yw9CxhtAAwJ__XI489_8a6XzRb1jLykw&s'
 ];
 
 module.exports = {
