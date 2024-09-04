@@ -54,7 +54,13 @@ module.exports = {
             
         } catch (error) {
             console.error(error);
-            interaction.reply({ content: 'An error occurred while trying to delete messages. Ensure messages are not older than 14 days.', ephemeral: true });
+            const embed = new EmbedBuilder()
+            .setColor(0xFF0000)  
+            .setTitle('Error')
+            .setDescription('An error occurred while trying to delete messages. Ensure messages are not older than 14 days..')
+            .setTimestamp();
+
+            await interaction.reply({ embeds: [embed], ephemeral: true });
         }
     },
 };

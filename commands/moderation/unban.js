@@ -40,7 +40,14 @@ module.exports = {
 
         } catch (error) {
             console.error(error);
-            interaction.reply({ content: 'I was unable to unban the user. Please check that the ID is correct and that the user is indeed banned.', ephemeral: true });
+            console.error(error);
+            const embed = new EmbedBuilder()
+            .setColor(0xFF0000)  
+            .setTitle('Error')
+            .setDescription('I was unable to unban the user. I may not have enough permissions or the user has a higher role.')
+            .setTimestamp();
+
+            await interaction.reply({ embeds: [embed], ephemeral: true });
         }
     },
 };

@@ -48,7 +48,14 @@ module.exports = {
 
         } catch (error) {
             console.error(error);
-            interaction.reply({ content: 'I could not remove the user timeout. I may not have enough permissions or the user has a higher role.', ephemeral: true });
+            console.error(error);
+            const embed = new EmbedBuilder()
+            .setColor(0xFF0000)  
+            .setTitle('Error')
+            .setDescription('I was unable to untimeout the user. I may not have enough permissions or the user has a higher role.')
+            .setTimestamp();
+
+            await interaction.reply({ embeds: [embed], ephemeral: true });
         }
     },
 };

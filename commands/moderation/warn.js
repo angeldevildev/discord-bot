@@ -42,7 +42,14 @@ module.exports = {
 
         } catch (error) {
             console.error(error);
-            interaction.reply({ content: 'I was unable to warn the user. Please check your permissions or try again later.', ephemeral: true });
+            console.error(error);
+            const embed = new EmbedBuilder()
+            .setColor(0xFF0000)  
+            .setTitle('Error')
+            .setDescription('I was unable to warn the user. I may not have enough permissions or the user has a higher role.')
+            .setTimestamp();
+
+            await interaction.reply({ embeds: [embed], ephemeral: true });
         }
     },
 };

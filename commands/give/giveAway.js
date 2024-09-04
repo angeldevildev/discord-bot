@@ -74,7 +74,13 @@ module.exports = {
 
             } catch (error) {
                 console.error(error);
-                interaction.followUp({ content: 'There was an error assigning the role to the winner. Please check my permissions and try again.', ephemeral: true });
+                const embed = new EmbedBuilder()
+                .setColor(0xFF0000)  
+                .setTitle('Error')
+                .setDescription('There was an error while changing the role. Check my permissions and try again')
+                .setTimestamp();
+
+            await interaction.reply({ embeds: [embed], ephemeral: true });
             }
         });
     },

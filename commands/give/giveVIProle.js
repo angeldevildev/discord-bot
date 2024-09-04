@@ -47,7 +47,13 @@ module.exports = {
 
         } catch (error) {
             console.error(error);
-            interaction.reply({ content: 'I was unable to assign the VIP role. I may not have enough permissions or the role is higher than my role.', ephemeral: true });
+            const embed = new EmbedBuilder()
+            .setColor(0xFF0000)  
+            .setTitle('Error')
+            .setDescription('I was unable to assign the VIP role. I may not have enough permissions or the role is higher than my role.')
+            .setTimestamp();
+
+            await interaction.reply({ embeds: [embed], ephemeral: true });
         }
     },
 };
