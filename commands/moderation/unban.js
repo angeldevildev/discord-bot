@@ -32,11 +32,7 @@ module.exports = {
                 )
                 .setTimestamp();
 
-            const message = await interaction.reply({ embeds: [embed] });
-
-            setTimeout(() => {
-                message.delete().catch(console.error);
-            }, 30000);
+            await interaction.reply({ embeds: [embed] });
 
         } catch (error) {
             console.error(error);

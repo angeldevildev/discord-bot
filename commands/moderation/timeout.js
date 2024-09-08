@@ -32,10 +32,6 @@ module.exports = {
             return interaction.reply({ content: "The user doesn't exist in this server", ephemeral: true });
         }
 
-        if (duration > 10080) {
-            return interaction.reply({ content: "The maxinum is 10.080 minutes!", ephemeral: true })
-        }
-
         const timeoutDuration = duration * 60 * 1000; 
 
         try {
@@ -53,11 +49,7 @@ module.exports = {
                 )
                 .setTimestamp();
 
-            const message = await interaction.reply({ embeds: [embed] });
-
-            setTimeout(() => {
-                message.delete().catch(console.error);
-            }, 30000);
+            await interaction.reply({ embeds: [embed] });
 
         } catch (error) {
             console.error(error);

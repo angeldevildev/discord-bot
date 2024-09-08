@@ -14,6 +14,10 @@ module.exports = {
                 .setRequired(true)),
     
     async execute(interaction) {
+        if (!interaction.member.permissions.has(['MANAGE_NICKNAMES', 'CHANGE_NICKNAME'])) {
+            return interaction.reply({ content: 'You do not have permission to manage or change nicknames.', ephemeral: true });
+        }
+
         const user = interaction.options.getUser('user');
         const nickname = interaction.options.getString('nickname');
         
