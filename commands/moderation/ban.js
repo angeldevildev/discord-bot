@@ -26,7 +26,27 @@ module.exports = {
             return interaction.reply({ content: "This member doesn't exist in this server.", ephemeral: true });
         }
 
+        const botMember = interaction.guild.members.me; 
+
+        if (member.roles.highest.position >= botMember.roles.highest.position) {
+            return interaction.reply({ content: 'I cannot ban this user because they have a higher or equal role than me.', ephemeral: true });
+        }
+
         try {
+            const dmEmbed = new EmbedBuilder()
+                .setColor("Red")
+                .setTitle('You have been banned')
+                .setDescription(`You have been banned from **${interaction.guild.name}**.`)
+                .addFields(
+                    { name: 'Reason', value: reason },
+                    { name: 'Moderator', value: `${interaction.user.tag}` }
+                )
+                .setTimestamp();
+
+            await user.send({ embeds: [dmEmbed] }).catch(err => {
+                console.log("This user has disabled DMs or an error occurred.");
+            });
+
             await member.ban({ reason });
 
             const embed = new EmbedBuilder()
@@ -45,10 +65,10 @@ module.exports = {
         } catch (error) {
             console.error(error);
             const embed = new EmbedBuilder()
-            .setColor(0xFF0000)  
-            .setTitle('Error')
-            .setDescription('I was unable to ban the user. I may not have enough permissions or the user has a higher role.')
-            .setTimestamp();
+                .setColor(0xFF0000)
+                .setTitle('Error')
+                .setDescription('I was unable to ban the user. I may not have enough permissions or the user has a higher role.')
+                .setTimestamp();
 
             await interaction.reply({ embeds: [embed], ephemeral: true });
         }

@@ -27,6 +27,20 @@ module.exports = {
         }
 
         try {
+            const dmEmbed = new EmbedBuilder()
+                .setColor("Yellow")
+                .setTitle('You have been warned')
+                .setDescription(`You have been warned in **${interaction.guild.name}**.`)
+                .addFields(
+                    { name: 'Reason', value: reason },
+                    { name: 'Moderator', value: `${interaction.user.tag}` }
+                )
+                .setTimestamp();
+
+            await user.send({ embeds: [dmEmbed] }).catch(err => {
+                console.log("This user has disabled DMs.");
+            });
+
             const embed = new EmbedBuilder()
                 .setColor("Yellow")
                 .setTitle('User Warned')
@@ -42,12 +56,11 @@ module.exports = {
 
         } catch (error) {
             console.error(error);
-            console.error(error);
             const embed = new EmbedBuilder()
-            .setColor(0xFF0000)  
-            .setTitle('Error')
-            .setDescription('I was unable to warn the user. I may not have enough permissions or the user has a higher role.')
-            .setTimestamp();
+                .setColor(0xFF0000)
+                .setTitle('Error')
+                .setDescription('I was unable to warn the user. I may not have enough permissions or the user has a higher role.')
+                .setTimestamp();
 
             await interaction.reply({ embeds: [embed], ephemeral: true });
         }

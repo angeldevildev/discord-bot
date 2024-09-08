@@ -1,4 +1,3 @@
-const { error } = require('console');
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
 module.exports = {
@@ -32,10 +31,28 @@ module.exports = {
             return interaction.reply({ content: "The user doesn't exist in this server", ephemeral: true });
         }
 
+        if (member.roles.highest.position >= interaction.guild.members.me.roles.highest.position) {
+            return interaction.reply({ content: "I cannot timeout this user due to role hierarchy.", ephemeral: true });
+        }
+
         const timeoutDuration = duration * 60 * 1000; 
 
         try {
             await member.timeout(timeoutDuration, reason);
+
+            const dmEmbed = new EmbedBuilder()
+                .setColor("DarkRed")
+                .setTitle('You have been muted')
+                .setDescription(`You have been muted for **${duration} minutes** from **${interaction.guild.name}**.`)
+                .addFields(
+                    { name: 'Reason', value: reason },
+                    { name: 'Moderator', value: `${interaction.user.tag}` }
+                )
+                .setTimestamp();
+
+            await user.send({ embeds: [dmEmbed] }).catch(err => {
+                console.log("This user has disabled DMs.");
+            });
 
             const embed = new EmbedBuilder()
                 .setColor("DarkRed")
@@ -53,12 +70,11 @@ module.exports = {
 
         } catch (error) {
             console.error(error);
-            console.error(error);
             const embed = new EmbedBuilder()
-            .setColor(0xFF0000)  
-            .setTitle('Error')
-            .setDescription('I was unable to timeout the user. I may not have enough permissions or the user has a higher role.')
-            .setTimestamp();
+                .setColor(0xFF0000)
+                .setTitle('Error')
+                .setDescription('I was unable to timeout the user. I may not have enough permissions or the user has a higher role.')
+                .setTimestamp();
 
             await interaction.reply({ embeds: [embed], ephemeral: true });
         }

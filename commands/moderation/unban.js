@@ -21,8 +21,26 @@ module.exports = {
         const reason = interaction.options.getString('reason') || 'No reason given.';
 
         try {
+            // Unban the user
             await interaction.guild.members.unban(userId, reason);
 
+            // Attempt to send a DM to the user
+            const user = await interaction.client.users.fetch(userId);
+            const dmEmbed = new EmbedBuilder()
+                .setColor("Green")
+                .setTitle('You have been unbanned')
+                .setDescription(`You have been unbanned from **${interaction.guild.name}**.`)
+                .addFields(
+                    { name: 'Reason', value: reason },
+                    { name: 'Moderator', value: `${interaction.user.tag}` }
+                )
+                .setTimestamp();
+
+            await user.send({ embeds: [dmEmbed] }).catch(err => {
+                console.log("This user has disabled DMs.");
+            });
+
+            // Confirmation message in the server
             const embed = new EmbedBuilder()
                 .setColor("Green")
                 .setTitle('User Unbanned')
@@ -36,12 +54,11 @@ module.exports = {
 
         } catch (error) {
             console.error(error);
-            console.error(error);
             const embed = new EmbedBuilder()
-            .setColor(0xFF0000)  
-            .setTitle('Error')
-            .setDescription('I was unable to unban the user. I may not have enough permissions or the user has a higher role.')
-            .setTimestamp();
+                .setColor(0xFF0000)
+                .setTitle('Error')
+                .setDescription('I was unable to unban the user. I may not have enough permissions or the user ID is incorrect.')
+                .setTimestamp();
 
             await interaction.reply({ embeds: [embed], ephemeral: true });
         }

@@ -27,8 +27,22 @@ module.exports = {
         }
 
         try {
-            await member.timeout(null, reason);  
+            await member.timeout(null, reason);
 
+            const dmEmbed = new EmbedBuilder()
+                .setColor("DarkBlue")
+                .setTitle('Timeout Removed')
+                .setDescription(`Your timeout has been removed in **${interaction.guild.name}**.`)
+                .addFields(
+                    { name: 'Reason', value: reason },
+                    { name: 'Moderator', value: `${interaction.user.tag}` }
+                )
+                .setTimestamp();
+
+            await user.send({ embeds: [dmEmbed] }).catch(err => {
+                console.log("This user has disabled DMs.");
+            });
+            
             const embed = new EmbedBuilder()
                 .setColor("DarkBlue")
                 .setTitle('Timeout Removed')
@@ -44,12 +58,11 @@ module.exports = {
 
         } catch (error) {
             console.error(error);
-            console.error(error);
             const embed = new EmbedBuilder()
-            .setColor(0xFF0000)  
-            .setTitle('Error')
-            .setDescription('I was unable to untimeout the user. I may not have enough permissions or the user has a higher role.')
-            .setTimestamp();
+                .setColor(0xFF0000)
+                .setTitle('Error')
+                .setDescription('I was unable to untimeout the user. I may not have enough permissions or the user has a higher role.')
+                .setTimestamp();
 
             await interaction.reply({ embeds: [embed], ephemeral: true });
         }
