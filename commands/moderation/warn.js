@@ -26,6 +26,10 @@ module.exports = {
             return interaction.reply({ content: "The user doesn't exist in this server.", ephemeral: true });
         }
 
+        if (member.roles.highest.position >= interaction.guild.members.me.roles.highest.position) {
+            return interaction.reply({ content: "I cannot timeout this user due to role hierarchy.", ephemeral: true });
+        }
+
         try {
             const dmEmbed = new EmbedBuilder()
                 .setColor("Yellow")
